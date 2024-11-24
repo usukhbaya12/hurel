@@ -31,19 +31,19 @@ export default function Navbar() {
           {/* DESKTOP MENU */}
           <div className="hidden md:flex">
             <div className="flex gap-8 items-center justify-between">
-              <div className="flex gap-6 w-full justify-end">
+              <div className="flex gap-8 w-full justify-end">
                 <div
                   className="cursor-pointer"
                   onClick={() => router.push("/location")}
                 >
-                  Байршил
+                  Location & Dress Code
                 </div>
-                <div
+                {/* <div
                   className="cursor-pointer"
                   onClick={() => router.push("/oscars")}
                 >
-                  Оскарын мэдээллүүд
-                </div>
+                  Oscar News
+                </div> */}
                 <div
                   className="cursor-pointer"
                   onClick={() => router.push("/movies")}
@@ -65,11 +65,20 @@ export default function Navbar() {
                   className="text-center leading-4 cursor-pointer"
                   onClick={() => router.push("/awards")}
                 >
-                  Оны шилдэг
+                  Awards Criteria
                 </div>
-                <div className="text-center leading-4">Зургийн цомог</div>
-                <div>Сугалаа</div>
-                <div>Мэдээлэл</div>
+                <div
+                  className="text-center leading-4 cursor-pointer"
+                  onClick={() => router.push("/gallery")}
+                >
+                  Gallery
+                </div>
+                <div
+                  className="text-center leading-4 cursor-pointer"
+                  onClick={() => router.push("/info")}
+                >
+                  Information
+                </div>
               </div>
             </div>
           </div>
@@ -88,17 +97,8 @@ export default function Navbar() {
                 onExpand();
               }}
             >
-              Байршил
+              Location & Dress Code
             </div>
-            <div
-              onClick={() => {
-                router.push("/oscars");
-                onExpand();
-              }}
-            >
-              Оскарын мэдээллүүд
-            </div>
-
             <div
               onClick={() => {
                 router.push("/movies");
@@ -113,23 +113,15 @@ export default function Navbar() {
                 onExpand();
               }}
             >
-              Оны шилдэг
+              Awards Criteria
             </div>
             <div
               onClick={() => {
-                router.push("/photos");
+                router.push("/gallery");
                 onExpand();
               }}
             >
-              Зургийн цомог
-            </div>
-            <div
-              onClick={() => {
-                router.push("/lottery");
-                onExpand();
-              }}
-            >
-              Сугалаа
+              Gallery
             </div>
             <div
               onClick={() => {
@@ -137,7 +129,7 @@ export default function Navbar() {
                 onExpand();
               }}
             >
-              Мэдээлэл
+              Information
             </div>
           </div>
         </div>

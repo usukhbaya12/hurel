@@ -58,7 +58,7 @@ export default function Movies() {
         )}
         {selected === "branch" && (
           <Image
-            src="/DEPARTMENT BRANCH of the year.jpg"
+            src="/branch.jpg"
             width={1000}
             height={100}
             alt="Branch of the year"

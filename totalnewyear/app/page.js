@@ -6,6 +6,21 @@ import { Tilt } from "react-tilt";
 export default function Home() {
   const targetDate = new Date("2024-12-18T09:00:00Z").getTime();
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audio = new Audio("/song.mp3"); // Path to your audio file in the public folder
+
+  const playAudio = async () => {
+    try {
+      await audio.play(); // Attempt to play the audio
+      setIsPlaying(!isPlaying); // Set state to indicate audio is playing
+      console.log("Audio is playing");
+    } catch (err) {
+      console.error("Audio autoplay failed", err);
+      // Optionally, provide user feedback on failure
+      alert("Please click to play the music!");
+    }
+  };
+
   // State to track snowflakes and time left
   const [snowflakes, setSnowflakes] = useState([]);
   const [timeLeft, setTimeLeft] = useState({
@@ -29,15 +44,7 @@ export default function Home() {
   // Client-side only code (only run after the component is mounted)
   useEffect(() => {
     // Set the initial snowflakes array
-    setSnowflakes([
-      "/oscar.png",
-      "/snowflake.png",
-      "/santa.png",
-      "/popcorn.png",
-      "/camera.png",
-      "/tree.png",
-      "/badge.png",
-    ]);
+    setSnowflakes(["/snowflake.webp"]); // Using only white snowflakes
 
     // Countdown logic
     const interval = setInterval(() => {
@@ -51,7 +58,7 @@ export default function Home() {
       }
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Cleanup interval on unmount
   }, [targetDate]);
 
   // Snowfall effect logic
@@ -59,19 +66,27 @@ export default function Home() {
     const snowfallContainer = document.getElementById("snowfall-container");
 
     if (snowfallContainer) {
-      snowflakes.forEach((url) => {
-        const snowflake = document.createElement("img");
-        snowflake.src = url;
-        snowflake.className = "snowflake";
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.animationDuration = `${Math.random() * 8 + 5}s`;
-        snowflake.style.width = "20px";
-        snowflake.style.height = "20px";
+      // Clear any existing snowflakes (to prevent duplication on re-renders)
+      snowfallContainer.innerHTML = "";
 
+      // Create a large number of snowflakes (e.g., 100 snowflakes)
+      for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement("img");
+        snowflake.src = "/snowflake.webp"; // Path to the white snowflake
+        snowflake.className = "snowflake";
+        snowflake.style.position = "absolute";
+        snowflake.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // Random speed
+        snowflake.style.animationTimingFunction = "linear"; // Constant speed for falling
+        snowflake.style.width = `${Math.random() * 10 + 10}px`; // Random size
+        snowflake.style.height = snowflake.style.width; // Maintain square shape
+        snowflake.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity for varied look
+
+        // Append the snowflake to the container
         snowfallContainer.appendChild(snowflake);
-      });
+      }
     }
-  }, [snowflakes]);
+  }, [snowflakes]); // Dependency on snowflakes to trigger effect
 
   return (
     <>
@@ -128,7 +143,10 @@ export default function Home() {
           />
 
           {/* Tilted Invitation Image (only for larger screens) */}
-          <div className="md:pl-16 sm:pl-24 hidden sm:flex">
+          <div
+            className="md:pl-16 sm:pl-24 hidden sm:flex z-[1000]"
+            onClick={playAudio}
+          >
             <Tilt options={{ tiltX: 10, tiltY: 15, max: 25, speed: 500 }}>
               <Image
                 src="/invitation].png"
