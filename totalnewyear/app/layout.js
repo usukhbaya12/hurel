@@ -25,7 +25,7 @@ const GIP = localFont({
       weight: "700",
     },
     {
-      path: "./fonts/GIP-Extrabold.woff",
+      path: "./fonts/GIP-ExtraBold.woff",
       weight: "800",
     },
     {
