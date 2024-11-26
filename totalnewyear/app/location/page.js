@@ -1,22 +1,34 @@
 "use client";
 import Image from "next/image";
 import { Collapse } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DressCode from "@/components/DressCode";
+import GoogleMapComponent from "@/components/Maps";
+import { useRouter } from "next/navigation";
 
 export default function Location() {
+  const router = useRouter();
+
   const items = [
     {
       key: "1",
       label: "Хаана?",
       children: (
-        <div className="flex gap-7 items-center">
+        <div
+          className="flex gap-7 items-center cursor-pointer"
+          onClick={() =>
+            window.open(
+              "https://www.facebook.com/profile.php?id=100065156916016",
+              "_blank"
+            )
+          }
+        >
           <Image
             src="/king.png"
             width={110}
             height={50}
             alt="King Ballroom logo"
-          ></Image>
+          />
           <div className="leading-5">
             <div className="font-bold pb-1">King Ballroom</div>
             <div>MN Tower B блок</div>
@@ -28,21 +40,40 @@ export default function Location() {
     {
       key: "2",
       label: "Хэзээ?",
-      children: <p>2024 оны 12 сарын 18-нд.</p>,
+      children: (
+        <div className="flex justify-center">
+          <Image
+            className="rounded-3xl"
+            src="/ognoo.gif"
+            width={220}
+            height={50}
+            alt="King Ballroom logo"
+          />
+        </div>
+      ),
     },
     {
       key: "3",
       label: "Хэдээс?",
-      children: <p>17 цагт! 😉</p>,
+      children: (
+        <div className="flex justify-center">
+          <Image
+            className="rounded-full"
+            src="/tsag.gif"
+            width={220}
+            height={50}
+            alt="King Ballroom logo"
+          />
+        </div>
+      ),
     },
     {
       key: "4",
       label: "Газрын зураг",
-      children: (
-        <Image src="/map.png" width={400} height={100} alt="Map"></Image>
-      ),
+      children: <GoogleMapComponent />,
     },
   ];
+
   return (
     <>
       <div className="px-6 sm:pt-12 pt-3 sm:px-20 sm:flex justify-between sm:gap-12">
@@ -58,7 +89,10 @@ export default function Location() {
               width={400}
               height={80}
               alt="Red Carpet"
-            ></Image>
+            />
+          </div>
+          <div className="pb-6">
+            Улаан хивсний ёслолд ирж буй мэтээр хувцаслаж ирнэ үү.
           </div>
           <div>
             <DressCode />
@@ -68,3 +102,5 @@ export default function Location() {
     </>
   );
 }
+
+// Цасыг чатан дээр байгаа эффектээр солиулах

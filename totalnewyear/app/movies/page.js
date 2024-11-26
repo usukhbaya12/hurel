@@ -15,7 +15,7 @@ export default function Movies() {
   // Styling for the selected title
   const titleStyle = (videoId) => {
     return currentVideo === videoId
-      ? "font-black p-2 cursor-pointer bg-yellow-500 text-white rounded-xl px-4 hover:px-4"
+      ? "font-black p-2 cursor-pointer bg-gradient-to-r from-[#d5a13e] text-white rounded-xl px-4 hover:px-4"
       : "font-black p-2 cursor-pointer hover:rounded-xl px-4 hover:px-4";
   };
 

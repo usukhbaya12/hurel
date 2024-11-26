@@ -6,23 +6,7 @@ import { Tilt } from "react-tilt";
 export default function Home() {
   const targetDate = new Date("2024-12-18T09:00:00Z").getTime();
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audio = new Audio("/song.mp3"); // Path to your audio file in the public folder
-
-  const playAudio = async () => {
-    try {
-      await audio.play(); // Attempt to play the audio
-      setIsPlaying(!isPlaying); // Set state to indicate audio is playing
-      console.log("Audio is playing");
-    } catch (err) {
-      console.error("Audio autoplay failed", err);
-      // Optionally, provide user feedback on failure
-      alert("Please click to play the music!");
-    }
-  };
-
-  // State to track snowflakes and time left
-  const [snowflakes, setSnowflakes] = useState([]);
+  // State to track time left
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -41,11 +25,7 @@ export default function Home() {
     return { days, hours, minutes, seconds };
   };
 
-  // Client-side only code (only run after the component is mounted)
   useEffect(() => {
-    // Set the initial snowflakes array
-    setSnowflakes(["/snowflake.webp"]); // Using only white snowflakes
-
     // Countdown logic
     const interval = setInterval(() => {
       const currentTime = Date.now();
@@ -61,32 +41,29 @@ export default function Home() {
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [targetDate]);
 
-  // Snowfall effect logic
+  // Light animation effect logic
   useEffect(() => {
-    const snowfallContainer = document.getElementById("snowfall-container");
+    const lightContainer = document.getElementById("light-container");
 
-    if (snowfallContainer) {
-      // Clear any existing snowflakes (to prevent duplication on re-renders)
-      snowfallContainer.innerHTML = "";
+    if (lightContainer) {
+      // Clear any existing lights (to prevent duplication on re-renders)
+      lightContainer.innerHTML = "";
 
-      // Create a large number of snowflakes (e.g., 100 snowflakes)
-      for (let i = 0; i < 100; i++) {
-        const snowflake = document.createElement("img");
-        snowflake.src = "/snowflake.webp"; // Path to the white snowflake
-        snowflake.className = "snowflake";
-        snowflake.style.position = "absolute";
-        snowflake.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-        snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // Random speed
-        snowflake.style.animationTimingFunction = "linear"; // Constant speed for falling
-        snowflake.style.width = `${Math.random() * 10 + 10}px`; // Random size
-        snowflake.style.height = snowflake.style.width; // Maintain square shape
-        snowflake.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity for varied look
+      // Create a number of animated lights (e.g., 20 lights)
+      for (let i = 0; i < 20; i++) {
+        const light = document.createElement("div");
+        light.className = "animated-light";
+        light.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        light.style.top = `${Math.random() * 100}vh`; // Random vertical position
+        light.style.animationDuration = `${Math.random() * 3 + 3}s`; // Random speed
+        light.style.width = `${Math.random() * 30 + 20}px`; // Random size
+        light.style.height = light.style.width; // Keep it circular
 
-        // Append the snowflake to the container
-        snowfallContainer.appendChild(snowflake);
+        // Append the light to the container
+        lightContainer.appendChild(light);
       }
     }
-  }, [snowflakes]); // Dependency on snowflakes to trigger effect
+  }, []); // Run once when the component mounts
 
   return (
     <>
@@ -143,10 +120,7 @@ export default function Home() {
           />
 
           {/* Tilted Invitation Image (only for larger screens) */}
-          <div
-            className="md:pl-16 sm:pl-24 hidden sm:flex z-[1000]"
-            onClick={playAudio}
-          >
+          <div className="md:pl-16 sm:pl-24 hidden sm:flex z-[1000]">
             <Tilt options={{ tiltX: 10, tiltY: 15, max: 25, speed: 500 }}>
               <Image
                 src="/invitation].png"
@@ -158,10 +132,10 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Snowfall Container */}
+        {/* Light Container */}
         <div
-          id="snowfall-container"
-          className="snowfall-container absolute top-0 left-0 w-full h-full pointer-events-none"
+          id="light-container"
+          className="absolute top-0 left-0 w-full h-full pointer-events-none"
         ></div>
       </div>
     </>

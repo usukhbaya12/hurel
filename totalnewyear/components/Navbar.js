@@ -8,16 +8,28 @@ import React, { useState } from "react";
 export default function Navbar() {
   const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false); // Tracks whether the audio is playing
+  const [audio] = useState(new Audio("/song2.mp3"));
+
+  const toggleAudio = () => {
+    if (isPlaying) {
+      audio.pause(); // Pause the audio
+    } else {
+      audio.play(); // Play the audio
+    }
+    setIsPlaying(!isPlaying); // Toggle the state
+  };
 
   const onExpand = () => setIsExpanded(!isExpanded);
   return (
     <>
       <nav className="w-full lg:px-12 md:px-8 px-6 py-5 border-b-[0.5px] border-[#d5a13e] bg-black">
         <div className="flex lg:justify-center md:justify-center items-center">
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center justify-between w-full">
             <button onClick={onExpand}>
               {isExpanded ? <XIcon /> : <HamburgerIcon />}
             </button>
+
             <div className="pl-4" onClick={() => router.push("/")}>
               <Image
                 src="/logo.png"
@@ -27,10 +39,28 @@ export default function Navbar() {
                 priority
               ></Image>
             </div>
+            <div className="cursor-pointer" onClick={toggleAudio}>
+              {/* Display the off/on icons based on audio state */}
+              <Image
+                src={isPlaying ? "/on.svg" : "/off.svg"}
+                width={20}
+                height={20}
+                alt={isPlaying ? "On" : "Off"}
+              />
+            </div>
           </div>
           {/* DESKTOP MENU */}
           <div className="hidden md:flex">
             <div className="flex gap-8 items-center justify-between">
+              <div className="cursor-pointer" onClick={toggleAudio}>
+                {/* Display the off/on icons based on audio state */}
+                <Image
+                  src={isPlaying ? "/on.svg" : "/off.svg"}
+                  width={70}
+                  height={70}
+                  alt={isPlaying ? "On" : "Off"}
+                />
+              </div>
               <div className="flex gap-8 w-full justify-end">
                 <div
                   className="cursor-pointer"
