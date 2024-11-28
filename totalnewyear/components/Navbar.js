@@ -3,24 +3,39 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { XIcon, HamburgerIcon } from "./Icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Navbar() {
   const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false); // Tracks whether the audio is playing
-  const [audio] = useState(new Audio("/song2.mp3"));
+  const [audio, setAudio] = useState(null); // Initialize audio state
+
+  // Set up the audio player in useEffect to run only on the client side
+  useEffect(() => {
+    const audioPlayer = new Audio("/song2.mp3");
+    setAudio(audioPlayer);
+
+    return () => {
+      // Cleanup the audio when the component is unmounted
+      audioPlayer.pause();
+      setAudio(null);
+    };
+  }, []); // Empty dependency array means this runs only once when the component mounts
 
   const toggleAudio = () => {
-    if (isPlaying) {
-      audio.pause(); // Pause the audio
-    } else {
-      audio.play(); // Play the audio
+    if (audio) {
+      if (isPlaying) {
+        audio.pause(); // Pause the audio
+      } else {
+        audio.play(); // Play the audio
+      }
+      setIsPlaying(!isPlaying); // Toggle the play/pause state
     }
-    setIsPlaying(!isPlaying); // Toggle the state
   };
 
   const onExpand = () => setIsExpanded(!isExpanded);
+
   return (
     <>
       <nav className="w-full lg:px-12 md:px-8 px-6 py-5 border-b-[0.5px] border-[#d5a13e] bg-black">
@@ -37,7 +52,7 @@ export default function Navbar() {
                 width={140}
                 alt="Logo"
                 priority
-              ></Image>
+              />
             </div>
             <div className="cursor-pointer" onClick={toggleAudio}>
               {/* Display the off/on icons based on audio state */}
@@ -68,12 +83,6 @@ export default function Navbar() {
                 >
                   Location & Dress Code
                 </div>
-                {/* <div
-                  className="cursor-pointer"
-                  onClick={() => router.push("/oscars")}
-                >
-                  Oscar News
-                </div> */}
                 <div
                   className="cursor-pointer"
                   onClick={() => router.push("/movies")}
@@ -89,7 +98,7 @@ export default function Navbar() {
                 width={180}
                 alt="Logo"
                 priority
-              ></Image>
+              />
               <div className="flex gap-6 w-full items-center">
                 <div
                   className="text-center leading-4 cursor-pointer"
