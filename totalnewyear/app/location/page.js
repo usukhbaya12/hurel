@@ -31,7 +31,10 @@ export default function Location() {
           />
           <div className="leading-5">
             <div className="font-bold pb-1">King Ballroom</div>
-            <div>ХУД, Цэнгэлдэх хүрээлэнгийн чанх хойно NM Tower B блок</div>
+            <div>
+              ХУД, Цэнгэлдэх хүрээлэнгийн чанх хойно <strong>NM Tower</strong> B
+              блок
+            </div>
             <div>4 давхар</div>
           </div>
         </div>
