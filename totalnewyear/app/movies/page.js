@@ -10,6 +10,7 @@ export default function Movies() {
   const videoTitles = {
     "9wCCT8LMNCw": "SQUID GAME", // Title for the first video
     Voqedxd2Shs: "Mad Max", // Title for the second video
+    LnhMaEp_IqM: "Ээдээ энэ хүүхнүүд үү",
   };
 
   // Styling for the selected title
@@ -35,6 +36,12 @@ export default function Movies() {
             onClick={() => setCurrentVideo("Voqedxd2Shs")}
           >
             {videoTitles["Voqedxd2Shs"]}
+          </div>
+          <div
+            className={titleStyle("LnhMaEp_IqM")}
+            onClick={() => setCurrentVideo("LnhMaEp_IqM")}
+          >
+            {videoTitles["LnhMaEp_IqM"]}
           </div>
         </div>
 
