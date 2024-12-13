@@ -55,7 +55,7 @@ export default function Info() {
         )}
 
         {currentVideo === "b" && (
-          <div className="w-[82%]">
+          <div className="sm:w-[82%] pt-8 sm:pt-2">
             {/* Carousel for seat chart */}
             <Carousel arrows>
               {Array.from({ length: 16 }, (_, index) => (
