@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Carousel } from "antd";
 import "antd/dist/reset.css"; // Ant Design styles
+import { useRouter } from "next/navigation";
 
 export default function Info() {
+  const router = useRouter();
   const [currentVideo, setCurrentVideo] = useState("a");
 
   const videoTitles = {
     a: "Gifts",
     b: "Seat Chart",
+    c: "Photos",
   };
 
   const titleStyle = (videoId) => {
@@ -27,6 +30,9 @@ export default function Info() {
           </div>
           <div className={titleStyle("b")} onClick={() => setCurrentVideo("b")}>
             {videoTitles["b"]}
+          </div>
+          <div className={titleStyle("c")} onClick={() => setCurrentVideo("c")}>
+            {videoTitles["c"]}
           </div>
         </div>
 
@@ -69,6 +75,22 @@ export default function Info() {
                 </div>
               ))}
             </Carousel>
+          </div>
+        )}
+
+        {currentVideo === "c" && (
+          <div className="sm:w-[82%] pt-8 sm:pt-2">
+            {/* Carousel for seat chart */}
+            <div
+              className="border rounded-xl w-fit p-3 cursor-pointer hover:text-[#d5a13e]"
+              onClick={() =>
+                router.push(
+                  "https://wetransfer.com/downloads/9924607179991ac64bfc85f885a366a020241226103721/fe4479ae0985c8bdaa47ed42c1d9736520241226103722/c88331?t_exp=1735468641&t_lsid=9c1a48ae-68a0-47b2-8907-8faae2806f16&t_network=email&t_rid=Z29vZ2xlLW9hdXRoMnwxMTM1NjQ5MjM2OTg1NjU4MzcwOTM=&t_s=download_link&t_ts=1735209441"
+                )
+              }
+            >
+              ЭНД дарж шинэ жилийн зургаа татаж авна уу.
+            </div>
           </div>
         )}
       </div>
